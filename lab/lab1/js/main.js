@@ -100,24 +100,64 @@ the week was the most common for garbage removal?
 
 var dataset = 'https://raw.githubusercontent.com/CPLN690-MUSA610/datasets/master/geojson/philadelphia-garbage-collection-boundaries.geojson';
 
+//task2
 var myStyle = function(feature) {
-  return {};
+  if (feature.properties.COLLDAY=="MON"){
+    return{color:'red'};
+  }
+  if (feature.properties.COLLDAY=="TUE"){
+    return{color:'green'};
+  }
+  if (feature.properties.COLLDAY=="WED"){
+    return{color:'blue'};
+  }
+  if (feature.properties.COLLDAY=="THU"){
+    return{color:'yellow'};
+  }
+  if (feature.properties.COLLDAY=="FRI"){
+    return{color:'#5d4c52'};
+  }
+
 };
 
 var eachFeature = function(feature, layer) {
+  if (feature.properties.COLLDAY=="MON"){
+    feature.properties.COLLDAY="Monday";
+  }
+  if (feature.properties.COLLDAY=="TUE"){
+    feature.properties.COLLDAY="Tuesday";
+  }
+  if (feature.properties.COLLDAY=="WED"){
+    feature.properties.COLLDAY="Wednesday";
+  }
+  if (feature.properties.COLLDAY=="THU"){
+    feature.properties.COLLDAY="Thursday";
+  }
+  if (feature.properties.COLLDAY=="FRI"){
+    feature.properties.COLLDAY="Friday";
+  }
   layer.on('click', function (e) {
     /* =====================
     The following code will run every time a feature on the map is clicked.
     Check out feature.properties to see some useful data about the feature that
     you can use in your application.
     ===================== */
+    $('.day-of-week').text(feature.properties.COLLDAY);
+    //task4
+    map.fitBounds(this.getBounds());
+    //task6
     console.log(feature);
     showResults();
   });
 };
 
+
+
 var myFilter = function(feature) {
-  return true;
+  if (feature.properties.COLLDAY !==" "){
+    return true;
+  }
+
 };
 
 $(document).ready(function() {
@@ -129,6 +169,7 @@ $(document).ready(function() {
       filter: myFilter
     }).addTo(map);
   });
+
 });
 
 var showResults = function() {
@@ -141,6 +182,32 @@ var showResults = function() {
   $('#intro').hide();
   $('#results').show();
 };
+
+//task 7
+var closeResults=function(){
+  $('#results').hide();
+  $('#intro').show();
+  map.setView([40.000, -75.1090],11);
+};
+
+$('#close').click(function(){
+    closeResults();
+});
+
+
+//task 8
+$.ajax(dataset).done(function(data){
+  var parsedData = JSON.parse(data);
+  var count = _.countBy(parsedData.features, function(obj) {
+    return obj.properties.COLLDAY;
+  });
+  console.log ('garbage removal on weekdays:', count);
+  console.log('garbage removal on Mon are', count.MON);
+  console.log('garbage removal on TUE are', count.TUE);
+  console.log('garbage removal on WED are', count.WED);
+  console.log('garbage removal on THU are', count.THU);
+  console.log('garbage removal on FRI are', count.FRI);
+});
 
 /* =====================
 Leaflet Configuration

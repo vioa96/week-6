@@ -10,6 +10,10 @@
   <body>
     <!-- Sidebar -->
     <div class="sidebar">
+      <button id='close'>
+        <p>close</p>
+      </button>
+
       <div id="intro">
         <h1>Garbage Collection Map</h1>
         <p class="main">The city of Philadelphia collects garbage from
@@ -27,11 +31,31 @@
         Day of Week</span>. If this week is a federal holiday, leave your
         garbage outside on the following day.</p>
       </div>
+
     </div>
     <!-- Map -->
-    <div id="map" class="map"></div>
+    <div id="map" class="map">
     <!-- Legend -->
-    <div class="legend"></div>
+    <div class="legend">
+      <div class='box' id='mon'>
+        <p class='day'> Monday </p>
+      </div>
+      <div class='box' id='tue'>
+        <p class='day'> Tuesday </p>
+      </div>
+      <div class='box' id='wed'>
+        <p class='day'> Wednesday </p>
+      </div>
+      <div class='box' id='thu'>
+        <p class='day'> Thursday </p4>
+      </div>
+      <div class='box' id='fri'>
+        <p class='day'> Friday </p5>
+      </div>
+    </div>
+</div>
+
+    </div>
     <!-- Javascript Imports -->
     <script src="js/jquery-2.2.0.js"></script>
     <script src="js/underscore.js"></script>
